@@ -9,6 +9,21 @@ Created on Mon Aug  8 16:41:21 2022
 import os
 import pyautogui as auto
 import time
+import requests
+
+main_dir = os.getcwd()        
+stacks=[]
+tokenid = []
+with open(main_dir+'/Token_Url_Id.txt') as T:
+    tokenid = T.readlines()
+    Access_Token = tokenid[1][:-1]
+    GID = tokenid[5][:-1]
+
+payload = {
+	'content':'System is undergoing Hard-Reset pls wait for 2 mins'
+}
+
+headers = {"Authorization": Access_Token}
 
 def driver():
     print('Please dont touch your mouse/keyboard..')
@@ -42,6 +57,13 @@ def driver():
     time.sleep(2)
 
 def close():
+    auto.press('win')
+    time.sleep(2)
+    auto.write('brave')
+    time.sleep(2)
+    auto.press('enter')
+    time.sleep(2)
+    auto.hotkey('ctrl','w')	
     time.sleep(2)
     auto.moveTo(350, 350)
     time.sleep(2)
@@ -71,12 +93,22 @@ def cleaner():
 
         else:
             pass
+
+def Sysmsg():
+     	
+    r=requests.post(
+    GID,data=payload,headers=headers)	
     
 i = 1
 while i<10:
-    driver()
-    time.sleep(900)
-    close()
-    time.sleep(2)
+    print('Cleaning..')
     cleaner()
+    time.sleep(2)
+    print('Automation Phase-1')
+    driver()
+    time.sleep(1200)
+    print('System Hard-Reset')
+    Sysmsg()
+    time.sleep(2)
+    close()
     time.sleep(2)
