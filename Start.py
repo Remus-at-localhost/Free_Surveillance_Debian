@@ -101,7 +101,7 @@ def Sysmsg():
     
 i = 1
 while i<10:
-    print('Cleaning..')
+    print('Clearing..')
     cleaner()
     time.sleep(2)
     print('Automation Phase-1')
